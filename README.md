@@ -7,8 +7,7 @@ alias ansible-playbook='docker run \
   --mount type=bind,source="$(pwd)",target=/ansible \
   -v "$HOME/.gnupg:/root/.gnupg" \
   -it \
-  ae \
-  ansible-playbook'
+  ae'
 ```
 
 "-v "$HOME/.gnupg:/root/.gnupg" is only is using ansible-vault.
