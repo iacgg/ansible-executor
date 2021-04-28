@@ -1,24 +1,42 @@
+# Ansible-Executor
+The goal of this project, is to make it simple to get started with ansible a virtual env. ( https://github.com/mrscherrycoke/simple-python-virtualenv ) <br>
+But why not use docker to get started!
+
 # Usages
-## Alias
+I use a alias for it. So it just replace my ansible-playbook command. You can also call the alias something else
+You need to be in the root of your ansible folder, then running the command with this alias
+
 ```bash
 alias ansible-playbook='docker run \
   -e "ANSIBLE_REMOTE_USER=$USER" \
-  -v "$SSH_AUTH_SOCK:/ssh-agent" \
   --mount type=bind,source="$(pwd)",target=/ansible \
+  -v "$SSH_AUTH_SOCK:/ssh-agent" \
   -v "$HOME/.gnupg:/root/.gnupg" \
   -it \
    mrscherrycoke/ansible:latest'
 ```
 
-"-v "$HOME/.gnupg:/root/.gnupg" is only is using ansible-vault.
-You need to be places in your ansible folder
+## Environment variables
+The container is running as root, so you will need to defined that remote user you will use.
+This can be done with a environment variable, in your config or as a variable for ansible
+I pass it as a environment variable.
+You alse need to place other custom ENV variable, if you have any for a dynamic inventory etc.
+
+## Mounts
+I normally just mount the folder i'm currently in. Because i replace my ansible-playbook command.
+But you can defined what ansible folder you will run, no matter where you are located on you machibe
+I also mount my SSH socket, and my GPG keys, when i'm working on a repo with ansible-vault that usages GPG.
+Otherwise i pass my ansible vault password as a ENV variable to to container.
+
+## Ansible adhoc commands
+I still need to create a image for that.
 
 # Build
 ```bash
 docker build ./ -t mrscherrycoke/ansible:latest
 docker build ./ -t mrscherrycoke/ansible:buster
 ```
-# Docker pushing
+## Docker pushing
 ```bash
 docker push mrscherrycoke/ansible:latest
 docker push mrscherrycoke/ansible:buster
