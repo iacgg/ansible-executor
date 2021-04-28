@@ -7,7 +7,7 @@ alias ansible-playbook='docker run \
   --mount type=bind,source="$(pwd)",target=/ansible \
   -v "$HOME/.gnupg:/root/.gnupg" \
   -it \
-  ae'
+   mrscherrycoke/ansible:latest'
 ```
 
 "-v "$HOME/.gnupg:/root/.gnupg" is only is using ansible-vault.
@@ -15,5 +15,11 @@ You need to be places in your ansible folder
 
 # Build
 ```bash
-docker build ./ -t ae
+docker build ./ -t mrscherrycoke/ansible:latest
+docker build ./ -t mrscherrycoke/ansible:buster
+```
+# Docker pushing
+```bash
+docker push mrscherrycoke/ansible:latest
+docker push mrscherrycoke/ansible:buster
 ```
