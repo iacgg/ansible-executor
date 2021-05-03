@@ -6,6 +6,7 @@ But why not use docker to get started!
 I use a alias for it. So it just replace my ansible-playbook command. You can also call the alias something else
 You need to be in the root of your ansible folder, then running the command with this alias
 
+ansible-playbook
 ```bash
 alias ansible-playbook='docker run \
   -e "ANSIBLE_REMOTE_USER=$USER" \
@@ -13,7 +14,29 @@ alias ansible-playbook='docker run \
   -v "$SSH_AUTH_SOCK:/ssh-agent" \
   -v "$HOME/.gnupg:/root/.gnupg" \
   -it \
+   mrscherrycoke/ansible-playbook:latest'
+```
+
+ansible
+```bash
+alias ansible='docker run \
+  -e "ANSIBLE_REMOTE_USER=$USER" \
+  --mount type=bind,source="$(pwd)",target=/ansible \
+  -v "$SSH_AUTH_SOCK:/ssh-agent" \
+  -v "$HOME/.gnupg:/root/.gnupg" \
+  -it \
    mrscherrycoke/ansible:latest'
+```
+
+ansible-vault
+```bash
+alias ansible-vault='docker run \
+  -e "ANSIBLE_REMOTE_USER=$USER" \
+  --mount type=bind,source="$(pwd)",target=/ansible \
+  -v "$SSH_AUTH_SOCK:/ssh-agent" \
+  -v "$HOME/.gnupg:/root/.gnupg" \
+  -it \
+   mrscherrycoke/ansible-vault:latest'
 ```
 
 ## Environment variables
@@ -28,16 +51,6 @@ But you can defined what ansible folder you will run, no matter where you are lo
 I also mount my SSH socket, and my GPG keys, when i'm working on a repo with ansible-vault that usages GPG.
 Otherwise i pass my ansible vault password as a ENV variable to to container.
 
-## Ansible adhoc commands
-I still need to create a image for that.
+# Build & Push
+./build.sh
 
-# Build
-```bash
-docker build ./ -t mrscherrycoke/ansible:latest
-docker build ./ -t mrscherrycoke/ansible:buster
-```
-## Docker pushing
-```bash
-docker push mrscherrycoke/ansible:latest
-docker push mrscherrycoke/ansible:buster
-```
