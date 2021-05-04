@@ -1,5 +1,5 @@
 # Ansible-Executor
-The goal of this project, is to make it simple to get started with ansible a virtual env. ( https://github.com/mrscherrycoke/simple-python-virtualenv ) <br>
+The goal of this project, is to make it simple to get started with ansible as if it was a virtual env. ( https://github.com/mrscherrycoke/simple-python-virtualenv ) <br>
 But why not use docker to get started!
 
 # Usages
@@ -53,4 +53,3 @@ Otherwise i pass my ansible vault password as a ENV variable to to container.
 
 # Build & Push
 ./build.sh
-
